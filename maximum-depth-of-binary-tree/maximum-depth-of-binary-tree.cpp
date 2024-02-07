@@ -10,11 +10,19 @@
  * };
  */
 class Solution {
-public:
+public:int ans;
+        int l,r=1;
+    int topdown(TreeNode* root, int depth){
+                if(root==NULL) return 0;
+                if(!(root->left) && !(root->right))  ans= max(ans,depth);
+                int l=topdown(root->left,depth+1);
+                int r=topdown(root->right,depth+1);
+                return ans;
+    }
     int maxDepth(TreeNode* root) {
-        if(root==NULL) return 0;
-        return 1+max(maxDepth(root->left),maxDepth(root->right));
-
+        
+       int a= topdown(root,1);
+        return a;
 
         
     }
