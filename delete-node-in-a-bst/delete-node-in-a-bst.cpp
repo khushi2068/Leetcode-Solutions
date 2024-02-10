@@ -20,9 +20,8 @@ public:
     TreeNode* helper(TreeNode* root){
         if(root->left==NULL) return root->right;
         if(root->right==NULL) return root->left;
-        TreeNode *right=root->right;
         TreeNode *left=findrightmost(root->left);
-        left->right=right;
+        left->right=root->right;
         return root->left;
     }
     TreeNode* deleteNode(TreeNode* root, int key) {
