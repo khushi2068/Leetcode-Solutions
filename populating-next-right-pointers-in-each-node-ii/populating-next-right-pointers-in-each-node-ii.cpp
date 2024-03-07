@@ -25,7 +25,7 @@ public:
         while(!q.empty()){
             int sz=q.size();
             Node *last=nullptr;
-            for(int i=sz-1;i>=0;i--){
+            for(int i=0;i<sz;i++){
                 Node *temp=q.front();
                 q.pop();
                 temp->next=last;
