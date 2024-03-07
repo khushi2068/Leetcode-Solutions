@@ -11,33 +11,14 @@
  */
 class Solution {
 public:
+    TreeNode* helper(TreeNode *root,TreeNode* newnode){
+        if(root==NULL) return newnode;
+        if(newnode->val>root->val) root->right=helper(root->right,newnode);
+        if(newnode->val<root->val) root->left=helper(root->left,newnode);
+        return root;
+}
     TreeNode* insertIntoBST(TreeNode* root, int val) {
         TreeNode* newnode=new TreeNode(val);
-        if(root==NULL) return newnode;
-        // if(root->left==NULL && root->right==NULL){
-        //     TreeNode* newnode=new TreeNode(val);
-        //     if(val>root->val) root->right=newnode;
-        //     else root->left=newnode;
-        //     return root;
-        // }
-
-        if(root->left==NULL && val<root->val) {
-            // TreeNode* newnode=new TreeNode(val);
-            root->left=newnode;
-            return root;
-        }
-        if(root->right==NULL && val>root->val){
-            // TreeNode* newnode=new TreeNode(val);
-            root->right=newnode;
-            return root;
-        }
-
-        if(val>root->val) root->right= insertIntoBST(root->right,val);
-        else root->left= insertIntoBST(root->left,val);
-        return root;
-
-
-
-
+        return helper(root,newnode);
     }
 };
