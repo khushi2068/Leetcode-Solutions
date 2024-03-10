@@ -1,50 +1,32 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
-    TreeNode* findrightmost(TreeNode* root){
-        while(root->right!=NULL){
-            root=root->right;
+    TreeNode* findRightmost(TreeNode* root) {
+        while (root->right != NULL) {
+            root = root->right;
         }
         return root;
     }
-    TreeNode* helper(TreeNode* root){
-        if(root->left==NULL) return root->right;
-        if(root->right==NULL) return root->left;
-        TreeNode *left=findrightmost(root->left);
-        left->right=root->right;
-        return root->left;
-    }
-    TreeNode* deleteNode(TreeNode* root, int key) {
-        if(root == NULL) return root;
-        if(root->val==key) return helper(root);
-        TreeNode* temp=root;
-        while(root!=NULL){
-            if(key<root->val){
-            if(root->left && root->left->val==key){
-                root->left=helper(root->left);
-                break;  
-            }
-            else root=root->left;
-            }
 
-            else{
-                if(root->right && key==root->right->val){
-                    root->right=helper(root->right);
-                    break;
-                }
-                else root=root->right;
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if (root == NULL) return root;
+        if (root->val == key) {
+            // Node with only one child or no child
+            if (root->left == NULL) {
+                return root->right;
+            } else if (root->right == NULL) {
+                return root->left;
             }
+            // Node with two children: Get the inorder predecessor (rightmost in left subtree)
+            TreeNode* inOrderPredecessor = findRightmost(root->left);
+            // Copy the inOrderPredecessor's content to root
+            root->val = inOrderPredecessor->val;
+            // Delete the inOrderPredecessor
+            root->left = deleteNode(root->left, inOrderPredecessor->val);
+        } else if (root->val > key) {
+            root->left = deleteNode(root->left, key);
+        } else {
+            root->right = deleteNode(root->right, key);
         }
-        return temp;
+        return root;
     }
 };
