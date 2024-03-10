@@ -11,19 +11,14 @@
  */
 class Solution {
 public:
-     bool helper(TreeNode *left, TreeNode *right){
-            if(left==NULL || right==NULL) return left==right;
-            if(left->val!=right->val) return false;
-            return helper(left->left,right->right) && helper(left->right,right->left);
-        }
+    bool checkEqual(TreeNode *left,TreeNode *right){
+        if(left==NULL ||right==NULL) return left==right;
+        if(left->val!=right->val) return false;
+        return checkEqual(left->left,right->right) && checkEqual(left->right,right->left);
+    }
     bool isSymmetric(TreeNode* root) {
-        
         if(root==NULL) return true;
-        return helper(root->left,root->right);
-        
-       
-
-        
-    
+        if(root->left==NULL || root->right==NULL) return root->left==root->right;
+        return checkEqual(root->left,root->right);
     }
 };
