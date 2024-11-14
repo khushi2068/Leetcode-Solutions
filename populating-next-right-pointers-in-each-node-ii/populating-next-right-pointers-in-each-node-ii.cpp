@@ -18,28 +18,28 @@ public:
 
 class Solution {
 public:
-    void helper(Node *root){
-        if(root==NULL) return;
+    Node* connect(Node* root) {
+        if(root==NULL) return root;
         queue<Node*> q;
+        
         q.push(root);
+        
         while(!q.empty()){
             int sz=q.size();
-            Node *last=nullptr;
+            Node* nxt=NULL;
+            
             for(int i=0;i<sz;i++){
-                Node *temp=q.front();
+                Node *current=q.front();
                 q.pop();
-                temp->next=last;
-                last=temp;
-                if(temp->right) q.push(temp->right);
-                if(temp->left) q.push(temp->left);
-
-            }
-            // prev->next=NULL;
+                current->next=nxt;
+                
+                if(current->right) q.push(current->right);
+                if(current->left) q.push(current->left);
+                nxt=current;
+                }
         }
-
-    }
-    Node* connect(Node* root) {
-        helper(root);
+        
         return root;
+        
     }
 };
